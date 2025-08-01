@@ -59,7 +59,7 @@ export async function registerUser(
     const token = createToken({ id: user.id });
     const html = getVerifyTemplate(
       user.name,
-      `${process.env.BASE_URL}/auth/verify-email?token=${token}&redirect=${process.env.BASE_URL}/wp-admin`
+      `${process.env.BASE_URL}/verify-email?token=${token}&redirect=${process.env.BASE_URL}/dashboard`
     );
     await sendMail({ to: user.email, subject: "Verify your email", html });
 

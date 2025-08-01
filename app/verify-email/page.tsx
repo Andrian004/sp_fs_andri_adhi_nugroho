@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 function VerifyEmail() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
-  const callbackUrl = searchParams.get("redirect") || "/wp-admin";
+  const callbackUrl = searchParams.get("redirect") || "/dashboard";
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
@@ -28,7 +28,7 @@ function VerifyEmail() {
       const result = await verifyEmail(token);
       if (result.success) {
         setStatus("success");
-        router.push(`/auth/login?callbackUrl=${callbackUrl}`);
+        router.push(`/login?callbackUrl=${callbackUrl}`);
       } else {
         setStatus("error");
         setErrorMessage(result.message);

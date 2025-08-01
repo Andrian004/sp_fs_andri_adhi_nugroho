@@ -1,14 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {
-  Home,
-  CreditCard,
-  Bell,
-  LetterText,
-  Database,
-  ChartNoAxesCombined,
-} from "lucide-react";
+import { Home, Bell } from "lucide-react";
 
 import {
   SidebarGroup,
@@ -24,32 +17,12 @@ import { cn } from "@/lib/utils";
 const items = [
   {
     title: "Overview",
-    url: "/wp-admin",
+    url: "/dashboard",
     icon: Home,
   },
   {
-    title: "Analitik",
-    url: "/wp-admin/analytics",
-    icon: ChartNoAxesCombined,
-  },
-  {
-    title: "Berita/Blog",
-    url: "/wp-admin/blog",
-    icon: LetterText,
-  },
-  {
-    title: "Produk",
-    url: "/wp-admin/product",
-    icon: Database,
-  },
-  {
-    title: "Pembayaran",
-    url: "/wp-admin/billing",
-    icon: CreditCard,
-  },
-  {
     title: "Notifikasi",
-    url: "/wp-admin/notification",
+    url: "/dashboard/notification",
     icon: Bell,
   },
 ];

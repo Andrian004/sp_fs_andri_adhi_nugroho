@@ -17,7 +17,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export function RegisterForm() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/wp-admin";
+  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
   const [response, formAction, isPending] = useActionState(
     registerUser,
     undefined

@@ -25,14 +25,14 @@ export async function SideBar() {
                 <Link href="/">
                   <Avatar className="h-8 w-8 rounded-lg">
                     <AvatarImage src="" alt="logo" />
-                    <AvatarFallback className="rounded-lg">WP</AvatarFallback>
+                    <AvatarFallback className="rounded-lg">Z</AvatarFallback>
                   </Avatar>
                 </Link>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate text-oxfordblue font-semibold">
-                    Dashboard
+                    Zentask
                   </span>
-                  <span className="truncate text-xs">Mega</span>
+                  <span className="truncate text-xs">Dashboard</span>
                 </div>
               </div>
             </SidebarMenuButton>

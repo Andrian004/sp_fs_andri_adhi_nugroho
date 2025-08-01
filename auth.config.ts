@@ -3,17 +3,20 @@ import type { NextAuthConfig } from "next-auth";
 export const authConfig = {
   trustHost: true, // NOTE: Remove this in production
   pages: {
-    signIn: "/auth/login",
+    signIn: "/login",
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isOnDashboard = nextUrl.pathname.startsWith("/wp-admin");
+      const isOnDashboard = nextUrl.pathname.startsWith("/dashboard");
       if (isOnDashboard) {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to login page
-      } else if (isLoggedIn && nextUrl.pathname.startsWith("/auth")) {
-        return Response.redirect(new URL("/wp-admin", nextUrl));
+      } else if (
+        isLoggedIn &&
+        ["/login", "/register", "/verify-email"].includes(nextUrl.pathname)
+      ) {
+        return Response.redirect(new URL("/dashboard", nextUrl));
       }
       return true;
     },

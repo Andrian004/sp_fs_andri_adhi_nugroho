@@ -1,5 +1,6 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { SideBar } from "@/components/admin-sidebar";
+import { Button } from "@/components/ui/button";
 // import { Button } from "@/components/ui/button";
 
 export default function DashboardLayout({
@@ -16,7 +17,7 @@ export default function DashboardLayout({
             <SidebarTrigger />
             <h1 className="text-xl font-semibold">Overview</h1>
           </div>
-          {/* <Button className="bg-oxfordblue">Cari Konsultan</Button> */}
+          <Button className="bg-sky-500">New Project</Button>
         </header>
         <main className="flex-grow p-4">{children}</main>
       </div>

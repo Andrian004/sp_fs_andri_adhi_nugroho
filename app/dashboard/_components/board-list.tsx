@@ -16,7 +16,7 @@ export const BoardList = () => {
         {projects.map((project) => (
           <Link
             key={project.id}
-            href={`/project/${project.id}`}
+            href={`/projects/${project.id}`}
             className="group relative aspect-video bg-no-repeat bg-center bg-cover bg-sky-700 rounded-sm w-full h-full p-2 overflow-hidden"
             style={{ backgroundImage: `url(${project.imageThumbUrl})` }}
           >

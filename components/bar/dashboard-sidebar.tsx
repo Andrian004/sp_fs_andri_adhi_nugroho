@@ -13,7 +13,7 @@ import { UserNav } from "@/components/navigation/user-nav";
 import { DashboardNav } from "@/components/navigation/dashboard-nav";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
-export async function SideBar() {
+export async function DashboardSideBar() {
   const session = await auth();
   return (
     <Sidebar>

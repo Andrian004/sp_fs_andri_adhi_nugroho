@@ -7,16 +7,16 @@ export const projects = [
   {
     id: "2",
     imageThumbUrl: "https://www.webpreneurly.com/webpreneurly-social-image.png",
-    title: "Webpreneurly",
+    title: "Nugas",
   },
   {
     id: "3",
     imageThumbUrl: "https://www.webpreneurly.com/webpreneurly-social-image.png",
-    title: "Webpreneurly",
+    title: "Skuynime",
   },
   {
     id: "4",
     imageThumbUrl: "https://www.webpreneurly.com/webpreneurly-social-image.png",
-    title: "Webpreneurly",
+    title: "Codetube",
   },
 ];

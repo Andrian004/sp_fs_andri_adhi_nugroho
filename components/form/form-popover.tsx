@@ -2,9 +2,10 @@
 
 import { ComponentRef, useRef } from "react";
 // import { useRouter } from "next/navigation";
-// import { toast } from "sonner";
-
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { X } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { useSession } from "next-auth/react";
 
 import {
   Popover,
@@ -12,9 +13,9 @@ import {
   PopoverTrigger,
   PopoverClose,
 } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
 import { FormInput } from "./form-input";
 import { FormSubmit } from "./form-submit";
-import { Button } from "@/components/ui/button";
 import { FormPicker } from "./form-picker";
 
 interface FormPopoverProps {
@@ -32,11 +33,70 @@ export const FormPopover = ({
 }: FormPopoverProps) => {
   // const router = useRouter();
   const closeRef = useRef<ComponentRef<"button">>(null);
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const { data: session } = useSession();
+
+  const createProject = useMutation({
+    mutationFn: async (data: {
+      title: string;
+      image: string;
+      ownerId: string;
+    }) => {
+      const response = await fetch("/api/project", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to create project");
+      }
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects"] });
+      closeRef.current?.click();
+      toast({
+        title: "Success",
+        description: "Project created successfully.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
   const onSubmit = (formData: FormData) => {
     const title = formData.get("title") as string;
     const image = formData.get("image") as string;
 
     console.log({ title, image });
+    if (!title || !image) {
+      toast({
+        title: "Error",
+        description: "Please fill in all fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!session?.user?.id) {
+      toast({
+        title: "Error",
+        description: "You must be logged in to create a project.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    createProject.mutate({
+      title,
+      image,
+      ownerId: session.user.id,
+    });
   };
 
   return (

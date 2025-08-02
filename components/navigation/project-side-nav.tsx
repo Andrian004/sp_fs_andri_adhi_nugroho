@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Bell, LayoutGrid } from "lucide-react";
+import { ChartNoAxesColumn, LayoutGrid, Settings } from "lucide-react";
 
 import {
   SidebarGroup,
@@ -10,25 +10,32 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 // Menu items.
 const items = [
   {
-    title: "Projects",
-    url: "/dashboard",
+    title: "Board",
+    url: "",
     icon: LayoutGrid,
   },
   {
-    title: "Notifikasi",
-    url: "/dashboard/notification",
-    icon: Bell,
+    title: "Settings",
+    url: "/settings",
+    icon: Settings,
+  },
+  {
+    title: "Activity",
+    url: "/activity",
+    icon: ChartNoAxesColumn,
   },
 ];
 
-export function DashboardNav() {
+export function ProjectSideNav() {
   const pathname = usePathname();
+  const params = useParams<{ id: string }>();
+  const mainUrl = `/projects/${params.id}`;
 
   return (
     <SidebarGroup>
@@ -40,10 +47,10 @@ export function DashboardNav() {
                 asChild
                 className={cn(
                   "bg-transparent",
-                  pathname === item.url && "bg-indigo-100"
+                  pathname === mainUrl + item.url && "bg-indigo-100"
                 )}
               >
-                <Link href={item.url} className="font-medium">
+                <Link href={mainUrl + item.url} className="font-medium">
                   <item.icon />
                   <span>{item.title}</span>
                 </Link>

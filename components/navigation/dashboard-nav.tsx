@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Home, Bell } from "lucide-react";
+import { Bell, LayoutGrid } from "lucide-react";
 
 import {
   SidebarGroup,
@@ -16,9 +16,9 @@ import { cn } from "@/lib/utils";
 // Menu items.
 const items = [
   {
-    title: "Overview",
+    title: "Projects",
     url: "/dashboard",
-    icon: Home,
+    icon: LayoutGrid,
   },
   {
     title: "Notifikasi",

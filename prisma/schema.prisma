@@ -14,39 +14,19 @@ datasource db {
 }
 
 model User {
-  id              String @id @default(cuid())
+  id              String @id @default(uuid())
   name            String
   email           String @unique
   emailVerified   DateTime?
   image           String?
   password        String
-  // accounts        Account[]
   sessions        Session[]
+  projects        Project[] @relation("UserProjects")
+  tasks           Task[]     @relation("AssignedTasks")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-
-// model Account {
-//   userId            String
-//   type              String
-//   provider          String
-//   providerAccountId String
-//   refresh_token     String?
-//   access_token      String?
-//   expires_at        Int?
-//   token_type        String?
-//   scope             String?
-//   id_token          String?
-//   session_state     String?
-
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-
-//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-//   @@id([provider, providerAccountId])
-// }
 
 model Session {
   sessionToken String   @unique
@@ -58,10 +38,66 @@ model Session {
   updatedAt DateTime @updatedAt
 }
 
-// model VerificationToken {
-//   identifier String
-//   token      String
-//   expires    DateTime
+model Project {
+  id                      String @id @default(uuid())
+  ownerId                 String
+  owner                   User @relation("UserProjects", fields: [ownerId], references: [id])
+  name                    String
+  imageId                 String
+  imageThumbUrl           String
+  imageFullUrl            String
+  imageUserName           String
+  imageLinkHTML           String
 
-//   @@id([identifier, token])
+  lists                   List[]
+
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+}
+
+model List {
+  id                      String @id @default(uuid())
+  title                   String
+  textColor               String?
+  backgroundColor         String?
+  order                   Int
+
+  projectId               String
+  project                 Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  cards                   Task[]
+
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  @@index([projectId])
+}
+
+model Task {
+  id                      String @id @default(uuid())
+  title                   String
+  order                   Int
+  description             String?
+  assigneeId              String?
+  assignee                User? @relation("AssignedTasks", fields: [assigneeId], references: [id])
+
+  listId                  String
+  list                    List @relation(fields: [listId], references: [id], onDelete: Cascade)
+
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  @@index([listId])
+}
+
+// model Membership {
+//   id        String   @id @default(uuid())
+//   userId    String
+//   projectId String
+
+//   user      User     @relation(fields: [userId], references: [id])
+//   project   Project  @relation(fields: [projectId], references: [id])
+
+//   @@unique([userId, projectId])
+//   createdAt DateTime @default(now())
 // }

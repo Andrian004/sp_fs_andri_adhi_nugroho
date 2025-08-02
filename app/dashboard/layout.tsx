@@ -15,7 +15,7 @@ export default function DashboardLayout({
         <header className="w-full sticky flex items-center justify-between p-3 bg-white border-b border-gray-200">
           <div className="flex gap-4">
             <SidebarTrigger />
-            <h1 className="text-xl font-semibold">Overview</h1>
+            <h1 className="text-xl font-semibold">Your Projects</h1>
           </div>
           <Button className="bg-sky-500">New Project</Button>
         </header>

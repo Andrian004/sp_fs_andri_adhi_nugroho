@@ -1,4 +1,5 @@
-import { auth } from "@/auth";
+"use client";
+
 import {
   Sidebar,
   SidebarContent,
@@ -8,25 +9,21 @@ import {
 import { ProjectsNav } from "@/components/navigation/projects-nav";
 import { UserNav } from "@/components/navigation/user-nav";
 import { ProjectSideNav } from "@/components/navigation/project-side-nav";
+import { useSession } from "next-auth/react";
+import { ProjectWithImage } from "@/types";
 
-const exampleProject = {
-  id: "1",
-  imageThumbUrl: "https://www.webpreneurly.com/webpreneurly-social-image.png",
-  title: "Webpreneurly",
-};
-
-export async function ProjectsSideBar() {
-  const session = await auth();
+export function ProjectsSideBar({ project }: { project: ProjectWithImage }) {
+  const session = useSession();
   return (
     <Sidebar>
       <SidebarHeader>
-        <ProjectsNav project={exampleProject} />
+        <ProjectsNav project={project} />
       </SidebarHeader>
       <SidebarContent>
         <ProjectSideNav />
       </SidebarContent>
       <SidebarFooter>
-        <UserNav user={session?.user} />
+        <UserNav user={session.data?.user} />
       </SidebarFooter>
     </Sidebar>
   );

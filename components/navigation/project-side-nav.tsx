@@ -26,8 +26,8 @@ const items = [
     icon: Settings,
   },
   {
-    title: "Activity",
-    url: "/activity",
+    title: "Analytics",
+    url: "/analytics",
     icon: ChartNoAxesColumn,
   },
 ];

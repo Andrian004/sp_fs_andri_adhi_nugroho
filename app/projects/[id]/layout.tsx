@@ -1,7 +1,5 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { ProjectsSideBar } from "@/components/bar/projects-sidebar";
-import { Button } from "@/components/ui/button";
-// import { Button } from "@/components/ui/button";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { ProjectsClientLayout } from "./_components/project-client-layout";
 
 export default function ProjectsLayout({
   children,
@@ -10,17 +8,7 @@ export default function ProjectsLayout({
 }) {
   return (
     <SidebarProvider>
-      <ProjectsSideBar />
-      <div className="w-full">
-        <header className="w-full sticky flex items-center justify-between p-3 bg-white border-b border-gray-200">
-          <div className="flex gap-4">
-            <SidebarTrigger />
-            <h1 className="text-xl font-semibold">Overview</h1>
-          </div>
-          <Button className="bg-sky-500">New Project</Button>
-        </header>
-        <main className="flex-grow p-4">{children}</main>
-      </div>
+      <ProjectsClientLayout>{children}</ProjectsClientLayout>
     </SidebarProvider>
   );
 }

@@ -73,7 +73,6 @@ export const FormPopover = ({
     const title = formData.get("title") as string;
     const image = formData.get("image") as string;
 
-    console.log({ title, image });
     if (!title || !image) {
       toast({
         title: "Error",

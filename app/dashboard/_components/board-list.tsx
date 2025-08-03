@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Plus } from "lucide-react";
-import { FormPopover } from "@/components/form/form-popover";
+// import { FormPopover } from "@/components/form/form-popover";
 import { Skeleton } from "@/components/ui/skeleton";
 import { CreateBoardModal } from "@/components/modals/create-board-modal";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
@@ -20,6 +20,7 @@ export const BoardList = () => {
       return data;
     },
   });
+
   return (
     <div className="space-y-4">
       {projectsQuery.isLoading ? (
@@ -43,20 +44,18 @@ export const BoardList = () => {
               </p>
             </Link>
           ))}
-          <div className="sm:hidden">
-            <CreateBoardModal className="rounded-md">
-              <div
-                role="button"
-                className="aspect-video relative h-full w-full bg-muted rounded-sm flex flex-col items-center justify-center gap-y-1 hover:opacity-75 transition"
-              >
-                <span>
-                  <Plus />
-                </span>
-                <p className="text-sm">Create new Project</p>
-              </div>
-            </CreateBoardModal>
-          </div>
-          <div className="hidden sm:inline">
+          <CreateBoardModal className="rounded-md">
+            <div
+              role="button"
+              className="aspect-video relative h-full w-full bg-muted rounded-sm flex flex-col items-center justify-center gap-y-1 hover:opacity-75 transition"
+            >
+              <span>
+                <Plus />
+              </span>
+              <p className="text-sm">Create new Project</p>
+            </div>
+          </CreateBoardModal>
+          {/* <div className="hidden sm:inline">
             <FormPopover sideOffset={10} side="right">
               <div
                 role="button"
@@ -68,7 +67,7 @@ export const BoardList = () => {
                 <p className="text-sm">Create New Project</p>
               </div>
             </FormPopover>
-          </div>
+          </div> */}
         </div>
       )}
     </div>

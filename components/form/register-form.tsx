@@ -26,7 +26,7 @@ export function RegisterForm() {
   return (
     <form action={formAction} className="space-y-3">
       <div className="flex-1 rounded-lg bg-slate-100 px-6 pb-4 pt-8">
-        <h1 className="mb-3 text-2xl">Welcome to next.js!</h1>
+        <h1 className="mb-3 text-2xl">Welcome to Zentask!</h1>
         {response &&
           (response === "success" ? (
             <Alert variant="success">

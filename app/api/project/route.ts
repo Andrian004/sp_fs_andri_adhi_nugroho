@@ -37,6 +37,39 @@ export const POST = auth(async function POST(request) {
       },
     });
 
+    await prisma.membership.create({
+      data: {
+        userId: ownerId,
+        projectId: project.id,
+      },
+    });
+
+    await prisma.list.createMany({
+      data: [
+        {
+          title: "Todo",
+          order: 1,
+          projectId: project.id,
+          textColor: "#000000",
+          backgroundColor: "#ffffff",
+        },
+        {
+          title: "InProgress",
+          order: 2,
+          projectId: project.id,
+          textColor: "#000000",
+          backgroundColor: "#ffe8b8",
+        },
+        {
+          title: "Done",
+          order: 3,
+          projectId: project.id,
+          textColor: "#000000",
+          backgroundColor: "#d5fdbf",
+        },
+      ],
+    });
+
     return Response.json(
       { message: "Project created successfully.", body: project },
       { status: 201 }
@@ -62,7 +95,10 @@ export const GET = auth(async function GET(request) {
       take: limit ? parseInt(limit) : undefined,
       skip: page ? (parseInt(page) - 1) * (limit ? parseInt(limit) : 10) : 0,
       where: {
-        ownerId: request.auth.user.id,
+        OR: [
+          { ownerId: request.auth.user.id },
+          { memberships: { some: { userId: request.auth.user.id } } },
+        ],
       },
       select: {
         id: true,
@@ -104,6 +140,21 @@ export const PUT = auth(async function PUT(request) {
         { status: 400 }
       );
     }
+
+    const isEditor = await prisma.membership.findFirst({
+      where: {
+        projectId,
+        userId: request.auth.user.id,
+      },
+    });
+
+    if (!isEditor) {
+      return NextResponse.json(
+        { message: "You do not have access to this project!" },
+        { status: 403 }
+      );
+    }
+
     const project = await prisma.project.update({
       where: {
         id: projectId,

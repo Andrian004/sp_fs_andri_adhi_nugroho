@@ -9,8 +9,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -23,6 +24,7 @@ model User {
   sessions        Session[]
   projects        Project[] @relation("UserProjects")
   tasks           Task[]     @relation("AssignedTasks")
+  memberships     Membership[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -50,6 +52,7 @@ model Project {
   imageLinkHTML           String
 
   lists                   List[]
+  memberships             Membership[]
 
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
@@ -65,7 +68,7 @@ model List {
   projectId               String
   project                 Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
-  cards                   Task[]
+  task                    Task[]
 
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
@@ -90,14 +93,16 @@ model Task {
   @@index([listId])
 }
 
-// model Membership {
-//   id        String   @id @default(uuid())
-//   userId    String
-//   projectId String
+model Membership {
+  id        String @id @default(uuid())
+  userId    String
+  projectId String
 
-//   user      User     @relation(fields: [userId], references: [id])
-//   project   Project  @relation(fields: [projectId], references: [id])
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-//   @@unique([userId, projectId])
-//   createdAt DateTime @default(now())
-// }
+  @@unique([userId, projectId])
+}
